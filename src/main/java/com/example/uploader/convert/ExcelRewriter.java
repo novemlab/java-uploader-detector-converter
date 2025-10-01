@@ -50,9 +50,18 @@ public class ExcelRewriter {
     }
 
     private static String safeSheetName(String s) {
-        String n = s.replaceAll("[:\\/?*\[\]]", "_");
-        if (n.length() > 31) n = n.substring(0, 31);
-        return n;
+        if (s == null || s.isEmpty()) {
+            return "Sheet";
+        }
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < s.length() && out.length() < 31; i++) {
+            char ch = s.charAt(i);
+            boolean invalid = (ch == ':' || ch == '\\' || ch == '/' || ch == '?' || ch == '*' || ch == '[' || ch == ']');
+            out.append(invalid ? '_' : ch);
+        }
+        if (out.length() == 0) {
+            return "Sheet";
+        }
+        return out.toString();
     }
 }
-
