@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - '**/*.java'
+      - 'pom.xml'
+      - '.github/workflows/**'
+  pull_request:
+    paths:
+      - '**/*.java'
+      - 'pom.xml'
+      - '.github/workflows/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: converter-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Build and test
+        run: mvn -B -ntp -U verify
+
+      - name: Deploy dry-run to local file repo
+        run: mvn -B -ntp -DskipTests -DaltDeploymentRepository=local::default::file:target/local-repo deploy
+
+      - name: Upload dry-run repo artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: local-maven-repo
+          path: target/local-repo
+          if-no-files-found: ignore
+
