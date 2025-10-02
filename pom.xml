@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.example</groupId>
+  <groupId>com.novemlab</groupId>
   <artifactId>java-uploader-detector-converter</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.3</version>
   <name>Java Uploader Detector &amp; Converter</name>
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
@@ -69,3 +69,10 @@
     </plugins>
   </build>
 </project>
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/novemlab/java-uploader-detector-converter</url>
+    </repository>
+  </distributionManagement>
