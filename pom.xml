@@ -68,7 +68,6 @@
       </plugin>
     </plugins>
   </build>
-</project>
   <distributionManagement>
     <repository>
       <id>github</id>
@@ -76,3 +75,4 @@
       <url>https://maven.pkg.github.com/novemlab/java-uploader-detector-converter</url>
     </repository>
   </distributionManagement>
+</project>
